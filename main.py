@@ -5,7 +5,7 @@ from pytube import YouTube
 from pathlib import Path
 
 def get_download_folder():
-    # Detecta o caminho da pasta de Downloads do usuário
+    # caminho pra onde vai o download
     home = str(Path.home())
     if os.name == 'nt':  # Windows
         download_folder = os.path.join(home, 'Downloads')
@@ -23,10 +23,10 @@ def baixar_video():
         yt = YouTube(url)
         status_label.config(text=f'Baixando: {yt.title}')
         
-        # Seleciona a stream de vídeo em mp4 de maior resolução
+        # escolher mp4 e com maior resolução possível 
         stream = yt.streams.filter(file_extension='mp4', progressive=True).get_highest_resolution()
         
-        # Define o caminho de download
+        # Define o caminho de download (vc pode mudar se quiser)
         download_folder = get_download_folder()
         stream.download(download_folder)
         
@@ -36,11 +36,11 @@ def baixar_video():
         status_label.config(text='Erro ao baixar o vídeo.')
         messagebox.showerror("Erro", f'Ocorreu um erro: {e}')
 
-# Configuração da interface gráfica
+# Interface
 app = tk.Tk()
 app.title("YouTube Video Downloader")
 
-# Rótulo e campo de entrada para a URL
+# label onde vai o URL
 url_label = tk.Label(app, text="URL do vídeo do YouTube:")
 url_label.pack(pady=5)
 url_entry = tk.Entry(app, width=50)
